@@ -7,8 +7,6 @@ import Features from '../components/Features'
 import BlogRoll from '../components/BlogRoll'
 
 export const IndexPageTemplate = ({
-  heading,
-  description,
   intro,
 }) => (
   <div>
@@ -18,14 +16,6 @@ export const IndexPageTemplate = ({
           <div className="columns">
             <div className="column is-10 is-offset-1">
               <div className="content">
-                <div className="columns">
-                  <div className="column is-12">
-                    <h3 className="has-text-weight-semibold is-size-2">
-                      {heading}
-                    </h3>
-                    <p>{description}</p>
-                  </div>
-                </div>
                 <Features gridItems={intro.blurbs} />
                 <div className="columns">
                   <div className="column is-12 has-text-centered">
@@ -57,9 +47,7 @@ export const IndexPageTemplate = ({
 IndexPageTemplate.propTypes = {
   image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   title: PropTypes.string,
-  heading: PropTypes.string,
   subheading: PropTypes.string,
-  description: PropTypes.string,
   intro: PropTypes.shape({
     blurbs: PropTypes.array,
   }),
@@ -73,9 +61,7 @@ const IndexPage = ({ data }) => {
       <IndexPageTemplate
         image={frontmatter.image}
         title={frontmatter.title}
-        heading={frontmatter.heading}
         subheading={frontmatter.subheading}
-        description={frontmatter.description}
         intro={frontmatter.intro}
       />
     </Layout>
@@ -104,9 +90,7 @@ export const pageQuery = graphql`
             }
           }
         }
-        heading
         subheading
-        description
         intro {
           blurbs {
             image {
@@ -118,8 +102,6 @@ export const pageQuery = graphql`
             }
             text
           }
-          heading
-          description
         }
       }
     }
