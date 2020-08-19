@@ -22,7 +22,7 @@ export const IndexPageTemplate = ({
                   <BlogRoll />
                   <div className="column is-12 has-text-centered">
                     <Link className="btn" to="/blog">
-                      記事一覧
+                      All Articles
                     </Link>
                   </div>
                 </div>

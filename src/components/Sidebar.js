@@ -15,7 +15,7 @@ class Sidebar extends React.Component {
       return allPeriods
     }, {})
     const archives = Object.keys(periodSummary).map((key) => (
-      <p>
+      <p key={key}>
         <Link to={`/${key}/`}>{key} ({periodSummary[key]})</Link>
       </p>
     ))

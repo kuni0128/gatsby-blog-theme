@@ -5,8 +5,8 @@ import PreviewCompatibleImage from '../components/PreviewCompatibleImage'
 
 const FeatureGrid = ({ gridItems }) => (
   <div className="columns is-multiline">
-    {gridItems.map((item) => (
-      <div key={item.text} className="column is-4">
+    {gridItems.map((item, key) => (
+      <div key={key} className="column is-4">
         <article className="is-child box">
           <div className="has-text-centered">
             <div
