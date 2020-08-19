@@ -18,6 +18,8 @@ exports.createPages = ({ actions, graphql }) => {
             frontmatter {
               tags
               templateKey
+              year: date(formatString: "YYYY")
+              month: date(formatString: "MM")
             }
           }
         }
@@ -30,6 +32,8 @@ exports.createPages = ({ actions, graphql }) => {
     }
 
     const posts = result.data.allMarkdownRemark.edges
+    const years = new Set()
+    const yearMonths = new Set()
 
     posts.forEach((edge) => {
       const id = edge.node.id
@@ -43,6 +47,41 @@ exports.createPages = ({ actions, graphql }) => {
         context: {
           id,
         },
+      })
+
+      const { year, month } = edge.node.frontmatter
+      years.add(year)
+      yearMonths.add(`${year}/${month}`)
+    })
+
+    // Make year pages
+    years.forEach((year) => {
+      createPage({
+        path: `/${year}/`,
+        component: path.resolve('src/templates/period-summary-page.js'),
+        context: {
+          displayYear: year,
+          periodStartDate: `${year}-01-01T00:00:00.000Z`,
+          periodEndDate: `${year}-12-31T23:59:59.999Z`
+        }
+      })
+    })
+
+    // Make year month pages
+    yearMonths.forEach((yearMonth) => {
+      const [year, month] = yearMonth.split('/')
+      const periodStartDate = `${year}-${month}-01T00:00:00.000Z`;
+      const endDate = new Date(year, month, 0)
+      const periodEndDate = `${year}-${month}-${endDate.getDate()}T23:59:59.999Z`;
+      createPage({
+        path: `/${year}/${month}/`,
+        component: path.resolve('src/templates/period-summary-page.js'),
+        context: {
+          displayYear: year,
+          displayMonth: month,
+          periodStartDate: periodStartDate,
+          periodEndDate: periodEndDate
+        }
       })
     })
 
